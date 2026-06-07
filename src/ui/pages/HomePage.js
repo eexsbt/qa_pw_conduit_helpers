@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 export class HomePage {
   constructor(page) {
@@ -8,14 +8,10 @@ export class HomePage {
   }
 
   async clickNewArticleLink() {
-    await test.step(`Click the 'New Article' link`, async () => {
-      await this.newArticleLink.click();
-    });
+    await this.newArticleLink.click();
   }
 
   async assertYourFeedTabIsVisible() {
-    await test.step(`Assert the 'Your Feed' tab is visible`, async () => {
-      await expect(this.yourFeedTab).toBeVisible();
-    });
+    await expect(this.yourFeedTab).toBeVisible();
   }
 }
