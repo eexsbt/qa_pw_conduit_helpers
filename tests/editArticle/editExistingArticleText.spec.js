@@ -4,7 +4,7 @@ import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
-import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 import { BODY_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
 

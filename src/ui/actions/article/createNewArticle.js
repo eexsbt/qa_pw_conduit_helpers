@@ -1,5 +1,5 @@
-import { CreateArticlePage } from '../../../pages/article/CreateArticlePage';
-import { ViewArticlePage } from '../../../pages/article/ViewArticlePage';
+import { CreateArticlePage } from '../../pages/article/CreateArticlePage';
+import { ViewArticlePage } from '../../pages/article/ViewArticlePage';
 
 export async function createNewArticle(page, article) {
   const createArticlePage = new CreateArticlePage(page);
@@ -17,4 +17,3 @@ export async function createNewArticle(page, article) {
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
 }
-    
