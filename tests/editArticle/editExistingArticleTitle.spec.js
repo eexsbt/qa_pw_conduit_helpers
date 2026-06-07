@@ -17,18 +17,36 @@ test.describe('Edit existing article title', () => {
     const createArticlePage = new CreateArticlePage(page);
     const viewArticlePage = new ViewArticlePage(page);
 
-    await signUpUser(page, user);
-    await createNewArticle(page, article);
+    await test.step('Sign up user', async () => {
+      await signUpUser(page, user);
+    });
 
-    await viewArticlePage.clickEditArticleButton();
-    await createArticlePage.fillTitleField(updatedTitle);
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle' }),
-      createArticlePage.clickPublishArticleButton(),
-    ]);
+    await test.step('Create new article', async () => {
+      await createNewArticle(page, article);
+    });
 
-    await viewArticlePage.reloadArticlePage();
-    await viewArticlePage.assertArticleTitleIsVisible(updatedTitle);
+    await test.step("Click 'Edit Article' button", async () => {
+      await viewArticlePage.clickEditArticleButton();
+    });
+
+    await test.step('Fill title field', async () => {
+      await createArticlePage.fillTitleField(updatedTitle);
+    });
+
+    await test.step('Publish article', async () => {
+      await Promise.all([
+        page.waitForNavigation({ waitUntil: 'networkidle' }),
+        createArticlePage.clickPublishArticleButton(),
+      ]);
+    });
+
+    await test.step('Reload article page', async () => {
+      await viewArticlePage.reloadArticlePage();
+    });
+
+    await test.step('Assert article title is visible', async () => {
+      await viewArticlePage.assertArticleTitleIsVisible(updatedTitle);
+    });
   });
 
   test('Remove an article title for the existing article', async ({ page }) => {
@@ -38,13 +56,28 @@ test.describe('Edit existing article title', () => {
     const createArticlePage = new CreateArticlePage(page);
     const viewArticlePage = new ViewArticlePage(page);
 
-    await signUpUser(page, user);
-    await createNewArticle(page, article);
+    await test.step('Sign up user', async () => {
+      await signUpUser(page, user);
+    });
 
-    await viewArticlePage.clickEditArticleButton();
-    await createArticlePage.fillTitleField('');
-    await createArticlePage.clickPublishArticleButton();
+    await test.step('Create new article', async () => {
+      await createNewArticle(page, article);
+    });
 
-    await createArticlePage.assertErrorMessageContainsText(TITLE_CANNOT_BE_EMPTY);
+    await test.step("Click 'Edit Article' button", async () => {
+      await viewArticlePage.clickEditArticleButton();
+    });
+
+    await test.step('Fill title field with empty value', async () => {
+      await createArticlePage.fillTitleField('');
+    });
+
+    await test.step('Click publish button', async () => {
+      await createArticlePage.clickPublishArticleButton();
+    });
+
+    await test.step('Assert error message is shown', async () => {
+      await createArticlePage.assertErrorMessageContainsText(TITLE_CANNOT_BE_EMPTY);
+    });
   });
 });

@@ -28,7 +28,7 @@ export class ViewArticlePage {
   }
 
   async assertTagIsNotVisible(tag) {
-    await expect(this.page.locator('.tag-list li', { hasText: tag })).not.toBeVisible();
+    await expect(this.page.locator('.tag-list li', { hasText: tag })).toBeHidden();
   }
 
   async reloadArticlePage() {

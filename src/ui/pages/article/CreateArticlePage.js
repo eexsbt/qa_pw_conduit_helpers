@@ -53,7 +53,7 @@ export class CreateArticlePage {
   }
 
   async assertTagIsNotVisible(tag) {
-    await expect(this.page.locator('.tag-list span', { hasText: tag })).not.toBeVisible();
+    await expect(this.page.locator('.tag-list span', { hasText: tag })).toBeHidden();
   }
 
   async clickPublishArticleButton() {

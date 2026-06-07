@@ -17,18 +17,36 @@ test.describe('Edit existing article description', () => {
     const createArticlePage = new CreateArticlePage(page);
     const viewArticlePage = new ViewArticlePage(page);
 
-    await signUpUser(page, user);
-    await createNewArticle(page, article);
+    await test.step('Sign up user', async () => {
+      await signUpUser(page, user);
+    });
 
-    await viewArticlePage.clickEditArticleButton();
-    await createArticlePage.fillDescriptionField(updatedDescription);
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle' }),
-      createArticlePage.clickPublishArticleButton(),
-    ]);
+    await test.step('Create new article', async () => {
+      await createNewArticle(page, article);
+    });
 
-    await viewArticlePage.clickEditArticleButton();
-    await createArticlePage.assertDescriptionFieldValue(updatedDescription);
+    await test.step("Click 'Edit Article' button", async () => {
+      await viewArticlePage.clickEditArticleButton();
+    });
+
+    await test.step('Fill description field', async () => {
+      await createArticlePage.fillDescriptionField(updatedDescription);
+    });
+
+    await test.step('Publish article', async () => {
+      await Promise.all([
+        page.waitForNavigation({ waitUntil: 'networkidle' }),
+        createArticlePage.clickPublishArticleButton(),
+      ]);
+    });
+
+    await test.step("Click 'Edit Article' button", async () => {
+      await viewArticlePage.clickEditArticleButton();
+    });
+
+    await test.step('Assert description field value', async () => {
+      await createArticlePage.assertDescriptionFieldValue(updatedDescription);
+    });
   });
 
   test('Remove an article description for the existing article', async ({ page }) => {
@@ -38,13 +56,28 @@ test.describe('Edit existing article description', () => {
     const createArticlePage = new CreateArticlePage(page);
     const viewArticlePage = new ViewArticlePage(page);
 
-    await signUpUser(page, user);
-    await createNewArticle(page, article);
+    await test.step('Sign up user', async () => {
+      await signUpUser(page, user);
+    });
 
-    await viewArticlePage.clickEditArticleButton();
-    await createArticlePage.fillDescriptionField('');
-    await createArticlePage.clickPublishArticleButton();
+    await test.step('Create new article', async () => {
+      await createNewArticle(page, article);
+    });
 
-    await createArticlePage.assertErrorMessageContainsText(DESCRIPTION_CANNOT_BE_EMPTY);
+    await test.step("Click 'Edit Article' button", async () => {
+      await viewArticlePage.clickEditArticleButton();
+    });
+
+    await test.step('Fill description field with empty value', async () => {
+      await createArticlePage.fillDescriptionField('');
+    });
+
+    await test.step('Click publish button', async () => {
+      await createArticlePage.clickPublishArticleButton();
+    });
+
+    await test.step('Assert error message is shown', async () => {
+      await createArticlePage.assertErrorMessageContainsText(DESCRIPTION_CANNOT_BE_EMPTY);
+    });
   });
 });
